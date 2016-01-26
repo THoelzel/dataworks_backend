@@ -24,11 +24,14 @@ public class EmployeeRestController {
 
 	private static SessionFactory sessionFactory;
 	private static ServiceRegistry serviceRegistry;
-    
+
+	public EmployeeRestController() {
+		createSessionFactory();
+	}
+
     @RequestMapping("/employee/{uuid}")
     public Employee getEmployee(@PathVariable String uuid) {
     	
-    	createSessionFactory();
         Session session = sessionFactory.openSession();
         
         Employee employee = (Employee) session.createCriteria(Employee.class)
@@ -39,11 +42,10 @@ public class EmployeeRestController {
         
         return employee;
     }
-    
+
     @RequestMapping("/employee")
     public List getEmployees() {
     	
-    	createSessionFactory();
         Session session = sessionFactory.openSession();
 
         List employees = session.createCriteria(Employee.class).list();
@@ -56,7 +58,6 @@ public class EmployeeRestController {
     @RequestMapping("/employee/search/all/{searchTerm}")
     public List searchForEmployee(@PathVariable String searchTerm) {
 
-    	createSessionFactory();
         Session session = sessionFactory.openSession();
 
         List employees = session.createCriteria(Employee.class)
@@ -84,7 +85,7 @@ public class EmployeeRestController {
         
         return employees;
     }
-    
+
     @RequestMapping("/employee/search/{searchCriteria}/{searchTerm}")
     public List searchForEmployee(@PathVariable String searchCriteria, @PathVariable String searchTerm) {
 
@@ -106,7 +107,6 @@ public class EmployeeRestController {
     		return result;
     	}
     	
-    	createSessionFactory();
         Session session = sessionFactory.openSession();
 
         
@@ -153,12 +153,12 @@ public class EmployeeRestController {
         }
 
         List employees = criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY).list();
-        
+
         session.close();
 
         return employees;
     }
-    
+
     public static SessionFactory createSessionFactory() {
     	
     	Configuration configuration = new Configuration();
@@ -168,10 +168,9 @@ public class EmployeeRestController {
     	
     	return sessionFactory;
     }
-    
+
     @RequestMapping("/running")
     public boolean isRunning() {
-        
         return true;
     }
 }
