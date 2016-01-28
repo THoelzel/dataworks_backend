@@ -1,8 +1,10 @@
 package dataworks.hibernate;
 
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,6 +17,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -23,7 +26,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 @Table(name = "employee")
 @JsonInclude(Include.NON_EMPTY)
-public class Employee {
+public class Employee implements java.io.Serializable {
+	
 	private String id;
 	private String firstName;
 	private String middleName;
@@ -35,13 +39,15 @@ public class Employee {
 	private Set<Email> emails;
 	private Set<Telephone> telephones;
 	private Set<Task> tasks;
+	private Set<EmployeeTeam> employeeTeams = new HashSet<EmployeeTeam>(0);
 
 	public Employee() {
 		
 	}
 	
 	public Employee(String id, String firstName, String middleName, String lastName, String gender, String title,
-			Date birthdate, Set<Address> addresses, Set<Email> emails, Set<Telephone> telephones, Set<Task> tasks) {
+			Date birthdate, Set<Address> addresses, Set<Email> emails, Set<Telephone> telephones, Set<Task> tasks,
+			Set<EmployeeTeam> employeeTeams) {
 		this.id = id;
 		this.firstName = firstName;
 		this.middleName = middleName;
@@ -53,12 +59,13 @@ public class Employee {
 		this.emails = emails;
 		this.telephones = telephones;
 		this.tasks = tasks;
+		this.employeeTeams = employeeTeams;
 	}
 
 	@Id
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid2")
-    @Column(name = "employee_id", unique = true)
+    @Column(name = "employee_id", unique = true, nullable = false)
 	public String getId() {
 		return id;
 	}
@@ -163,5 +170,15 @@ public class Employee {
 
 	public void setTasks(Set<Task> tasks) {
 		this.tasks = tasks;
+	}
+
+	@OneToMany(mappedBy = "pk.employee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@Fetch(FetchMode.SELECT) 
+	public Set<EmployeeTeam> getEmployeeTeams() {
+		return employeeTeams;
+	}
+
+	public void setEmployeeTeams(Set<EmployeeTeam> employeeTeams) {
+		this.employeeTeams = employeeTeams;
 	}
 }

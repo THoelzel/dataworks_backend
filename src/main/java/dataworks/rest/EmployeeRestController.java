@@ -37,12 +37,11 @@ public class EmployeeRestController {
         Session session = sessionFactory.openSession();
         
         Employee employee = (Employee) session.createCriteria(Employee.class)
+        		.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
         		.add(Restrictions.eq("id", uuid))
         		.list().get(0);
-        
-        session.close();
-        
-        return employee;
+
+        return employee;    
     }
 
     @RequestMapping("/employee")
@@ -51,8 +50,6 @@ public class EmployeeRestController {
         Session session = sessionFactory.openSession();
 
         List employees = session.createCriteria(Employee.class).list();
-        
-        session.close();
 
         return employees;
     }
@@ -82,8 +79,6 @@ public class EmployeeRestController {
         				)
         		.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY)
         		.list();
-
-        session.close();
         
         return employees;
     }
@@ -111,7 +106,6 @@ public class EmployeeRestController {
     	
         Session session = sessionFactory.openSession();
 
-        
         Criteria criteria = session.createCriteria(Employee.class);
         
         if(searchCriteria.equalsIgnoreCase("firstName")) {
@@ -156,8 +150,6 @@ public class EmployeeRestController {
 
         List employees = criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY).list();
 
-        session.close();
-
         return employees;
     }
 
@@ -169,10 +161,5 @@ public class EmployeeRestController {
     	sessionFactory = configuration.buildSessionFactory(serviceRegistry);
     	
     	return sessionFactory;
-    }
-
-    @RequestMapping("/running")
-    public boolean isRunning() {
-        return true;
     }
 }
