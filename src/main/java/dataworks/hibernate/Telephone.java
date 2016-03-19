@@ -82,6 +82,7 @@ public class Telephone {
 		this.employee = employee;
 	}
 
+	@Column(name = "primary_telephone")
 	public boolean isPrimary() {
 		return primary;
 	}

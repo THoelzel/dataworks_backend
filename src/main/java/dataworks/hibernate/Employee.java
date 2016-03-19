@@ -39,7 +39,7 @@ public class Employee implements java.io.Serializable {
 	private Set<Email> emails;
 	private Set<Telephone> telephones;
 	private Set<Task> tasks;
-	private Set<EmployeeTeam> employeeTeams = new HashSet<EmployeeTeam>(0);
+	private Set<EmployeeTeam> teams = new HashSet<EmployeeTeam>(0);
 
 	public Employee() {
 		
@@ -47,7 +47,7 @@ public class Employee implements java.io.Serializable {
 	
 	public Employee(String id, String firstName, String middleName, String lastName, String gender, String title,
 			Date birthdate, Set<Address> addresses, Set<Email> emails, Set<Telephone> telephones, Set<Task> tasks,
-			Set<EmployeeTeam> employeeTeams) {
+			Set<EmployeeTeam> teams) {
 		this.id = id;
 		this.firstName = firstName;
 		this.middleName = middleName;
@@ -59,7 +59,7 @@ public class Employee implements java.io.Serializable {
 		this.emails = emails;
 		this.telephones = telephones;
 		this.tasks = tasks;
-		this.employeeTeams = employeeTeams;
+		this.teams = teams;
 	}
 
 	@Id
@@ -129,7 +129,7 @@ public class Employee implements java.io.Serializable {
 	}
 
 	@JsonManagedReference
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "employee")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "employee", cascade = CascadeType.ALL)
 	@Fetch(FetchMode.SELECT) 
 	public Set<Address> getAddresses() {
 		return addresses;
@@ -138,9 +138,13 @@ public class Employee implements java.io.Serializable {
 	public void setAddresses(Set<Address> addresses) {
 		this.addresses = addresses;
 	}
+	
+/*	public void addAddress(Address address) {
+		this.addresses.add(address);
+	}*/
 
 	@JsonManagedReference
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "employee")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "employee", cascade = CascadeType.ALL)
 	@Fetch(FetchMode.SELECT) 
 	public Set<Email> getEmails() {
 		return emails;
@@ -151,7 +155,7 @@ public class Employee implements java.io.Serializable {
 	}
 
 	@JsonManagedReference
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "employee")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "employee", cascade = CascadeType.ALL)
 	@Fetch(FetchMode.SELECT) 
 	public Set<Telephone> getTelephones() {
 		return telephones;
@@ -162,7 +166,7 @@ public class Employee implements java.io.Serializable {
 	}
 
 	@JsonManagedReference
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "employee")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "employee", cascade = CascadeType.ALL)
 	@Fetch(FetchMode.SELECT) 
 	public Set<Task> getTasks() {
 		return tasks;
@@ -172,13 +176,13 @@ public class Employee implements java.io.Serializable {
 		this.tasks = tasks;
 	}
 
-	@OneToMany(mappedBy = "pk.employee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "employeeTeamId.employee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@Fetch(FetchMode.SELECT) 
-	public Set<EmployeeTeam> getEmployeeTeams() {
-		return employeeTeams;
+	public Set<EmployeeTeam> getTeams() {
+		return teams;
 	}
 
-	public void setEmployeeTeams(Set<EmployeeTeam> employeeTeams) {
-		this.employeeTeams = employeeTeams;
+	public void setTeams(Set<EmployeeTeam> teams) {
+		this.teams = teams;
 	}
 }

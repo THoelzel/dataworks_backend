@@ -1,5 +1,6 @@
 package dataworks.hibernate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -77,7 +78,7 @@ public class Address {
 	}
 	
 	@JsonBackReference
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_employee_address", nullable = false)
 	public Employee getEmployee() {
 		return employee;
@@ -87,6 +88,7 @@ public class Address {
 		this.employee = employee;
 	}
 
+	@Column(name = "primary_address")
 	public boolean isPrimary() {
 		return primary;
 	}

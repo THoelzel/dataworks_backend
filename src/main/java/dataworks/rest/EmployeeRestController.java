@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.MatchMode;
@@ -15,23 +16,72 @@ import org.hibernate.service.ServiceRegistryBuilder;
 import org.hibernate.sql.JoinType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import dataworks.hibernate.Employee;
+import dataworks.hibernate.Team;
 
 @RestController
 @CrossOrigin
 public class EmployeeRestController {
 
+	/** The session factory. */
 	private static SessionFactory sessionFactory;
+	
+	/** The service registry. */
 	private static ServiceRegistry serviceRegistry;
 
+	/**
+	 * Instantiates a new employee rest controller.
+	 */
 	public EmployeeRestController() {
 		createSessionFactory();
 	}
 
-    @RequestMapping("/employee/{uuid}")
+    /**
+     * Adds the employee.
+     *
+     * @param employee the employee
+     * @return the employee
+     */
+    @RequestMapping(value = "/employee", method = RequestMethod.POST)
+    public Employee addEmployee(@RequestBody Employee employee) {
+    	
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        session.persist(employee);
+        tx.commit();
+
+        return employee;    
+    }
+    
+    /**
+     * Adds the team.
+     *
+     * @param team the team
+     * @return the team
+     */
+    @RequestMapping(value = "/employee", method = RequestMethod.POST)
+    public Team addTeam(@RequestBody Team team) {
+    	
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        session.persist(team);
+        tx.commit();
+
+        return team;    
+    }
+    
+    /**
+     * Gets the employee.
+     *
+     * @param uuid the uuid
+     * @return the employee
+     */
+    @RequestMapping(value = "/employee/{uuid}", method = RequestMethod.GET)
     public Employee getEmployee(@PathVariable String uuid) {
     	
         Session session = sessionFactory.openSession();
@@ -44,16 +94,77 @@ public class EmployeeRestController {
         return employee;    
     }
 
-    @RequestMapping("/employee")
+    /**
+     * Gets the employees.
+     *
+     * @return the employees
+     */
+    @RequestMapping(value = "/employee", method = RequestMethod.GET)
     public List getEmployees() {
     	
         Session session = sessionFactory.openSession();
 
-        List employees = session.createCriteria(Employee.class).list();
+        return session.createCriteria(Employee.class).list();
+    }
+    
+    /**
+     * Gets the team.
+     *
+     * @param uuid the uuid
+     * @return the team
+     */
+    @RequestMapping("/team/{uuid}")
+    public Team getTeam(@PathVariable String uuid) {
+    	
+        Session session = sessionFactory.openSession();
+        
+        Team team = (Team) session.createCriteria(Team.class)
+        		.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+        		.add(Restrictions.eq("id", uuid))
+        		.list().get(0);
 
-        return employees;
+        return team;    
+    }
+    
+    /**
+     * Gets the teams.
+     *
+     * @return the teams
+     */
+    @RequestMapping("/team")
+    public List getTeams() {
+    	
+        Session session = sessionFactory.openSession();
+
+        return session.createCriteria(Team.class).list();
+    }
+    
+    /**
+     * Gets the employee by team.
+     *
+     * @param uuid the uuid
+     * @return the employee by team
+     */
+    @RequestMapping("/employee/team/{uuid}")
+    public List getEmployeeByTeam(@PathVariable String uuid) {
+    	
+        Session session = sessionFactory.openSession();
+        
+        List employees = session.createCriteria(Employee.class)
+        		.createAlias("teams", "teams")
+        		.add(Restrictions.eq("teams.employeeTeamId.team.id", uuid))
+        		.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY)
+        		.list();
+
+        return employees;    
     }
 
+    /**
+     * Search for employee.
+     *
+     * @param searchTerm the search term
+     * @return the list
+     */
     @RequestMapping("/employee/search/all/{searchTerm}")
     public List searchForEmployee(@PathVariable String searchTerm) {
 
@@ -83,6 +194,13 @@ public class EmployeeRestController {
         return employees;
     }
 
+    /**
+     * Search for employee.
+     *
+     * @param searchCriteria the search criteria
+     * @param searchTerm the search term
+     * @return the list
+     */
     @RequestMapping("/employee/search/{searchCriteria}/{searchTerm}")
     public List searchForEmployee(@PathVariable String searchCriteria, @PathVariable String searchTerm) {
 
@@ -153,6 +271,11 @@ public class EmployeeRestController {
         return employees;
     }
 
+    /**
+     * Creates the session factory.
+     *
+     * @return the session factory
+     */
     public static SessionFactory createSessionFactory() {
     	
     	Configuration configuration = new Configuration();

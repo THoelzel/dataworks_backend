@@ -77,6 +77,7 @@ public class Task {
 		this.employee = employee;
 	}
 
+	@Column(name = "primary_task")
 	public boolean isPrimary() {
 		return primary;
 	}

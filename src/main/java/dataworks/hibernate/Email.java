@@ -75,6 +75,7 @@ public class Email {
 		this.employee = employee;
 	}
 
+	@Column(name = "primary_email")
 	public boolean isPrimary() {
 		return primary;
 	}
