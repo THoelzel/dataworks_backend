@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -28,15 +29,9 @@ import dataworks.hibernate.Team;
 @CrossOrigin
 public class EmployeeRestController {
 
-	/** The session factory. */
 	private static SessionFactory sessionFactory;
-	
-	/** The service registry. */
 	private static ServiceRegistry serviceRegistry;
 
-	/**
-	 * Instantiates a new employee rest controller.
-	 */
 	public EmployeeRestController() {
 		createSessionFactory();
 	}
@@ -51,9 +46,9 @@ public class EmployeeRestController {
     public Employee addEmployee(@RequestBody Employee employee) {
     	
         Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
+        Transaction transaction = session.beginTransaction();
         session.persist(employee);
-        tx.commit();
+        transaction.commit();
 
         return employee;    
     }
@@ -64,13 +59,13 @@ public class EmployeeRestController {
      * @param team the team
      * @return the team
      */
-    @RequestMapping(value = "/employee", method = RequestMethod.POST)
+    @RequestMapping(value = "/team", method = RequestMethod.POST)
     public Team addTeam(@RequestBody Team team) {
     	
         Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
+        Transaction transaction = session.beginTransaction();
         session.persist(team);
-        tx.commit();
+        transaction.commit();
 
         return team;    
     }
@@ -93,6 +88,44 @@ public class EmployeeRestController {
 
         return employee;    
     }
+    
+    /**
+     * Deletes the employee.
+     *
+     * @param uuid the uuid
+     */
+    @RequestMapping(value = "/employee/{uuid}", method = RequestMethod.DELETE)
+    public void deleteEmployee(@PathVariable String uuid) {
+    	
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Employee employee = (Employee) session.get(Employee.class, uuid);
+        session.delete(employee);
+        session.getTransaction().commit();
+    }
+    
+    /**
+     * Deletes the team.
+     *
+     * @param uuid the uuid
+     */
+    @RequestMapping(value = "/team/{uuid}", method = RequestMethod.DELETE)
+    public void deleteTeam(@PathVariable String uuid) {
+    	
+        Session session = sessionFactory.openSession();
+        
+        Transaction transaction = session.beginTransaction();
+        String hql = "delete from EmployeeTeam where fk_team_employee_team = :team";
+        Query query = session.createQuery(hql);
+        query.setString("team", uuid);
+        query.executeUpdate();
+        transaction.commit();
+        
+        transaction = session.beginTransaction();
+        Team employee = (Team) session.get(Team.class, uuid);
+        session.delete(employee);
+        transaction.commit();
+    }
 
     /**
      * Gets the employees.
@@ -113,7 +146,7 @@ public class EmployeeRestController {
      * @param uuid the uuid
      * @return the team
      */
-    @RequestMapping("/team/{uuid}")
+    @RequestMapping(value = "/team/{uuid}", method = RequestMethod.GET)
     public Team getTeam(@PathVariable String uuid) {
     	
         Session session = sessionFactory.openSession();

@@ -1,7 +1,5 @@
 package dataworks.hibernate;
 
-import java.io.Serializable;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.FetchType;
