@@ -24,23 +24,14 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 		joinColumns = @JoinColumn(name = "fk_employee_employee_team")),
 	@AssociationOverride(name = "employeeTeamId.team", 
 		joinColumns = @JoinColumn(name = "fk_team_employee_team")) })
-//@JsonInclude(Include.NON_EMPTY)
 public class EmployeeTeam implements java.io.Serializable {
 
 	private boolean primary;
 	private EmployeeTeamId employeeTeamId = new EmployeeTeamId();
-//    private Team team;
-//    private Employee employee;
 	
 	public EmployeeTeam() {
 		
 	}
-
-//	public EmployeeTeam(boolean primary, Team team, Employee employee) {
-//		this.primary = primary;
-//		this.team = team;
-//		this.employee = employee;
-//	}
 
 	@EmbeddedId
 	@JsonIgnore
@@ -61,9 +52,6 @@ public class EmployeeTeam implements java.io.Serializable {
 		this.primary = primary;
 	}
 
-//	@Id
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "fk_team_employee_team")
 	@Transient
 	public Team getTeam() {
 		return getEmployeeTeamId().getTeam();
@@ -73,9 +61,6 @@ public class EmployeeTeam implements java.io.Serializable {
 		getEmployeeTeamId().setTeam(team);
 	}
 
-//	@Id
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "fk_employee_employee_team")
 	@JsonIgnore
 	@Transient
 	public Employee getEmployee() {

@@ -3,21 +3,15 @@ package dataworks.hibernate;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Entity
@@ -74,14 +68,4 @@ public class Team implements java.io.Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-//	@OneToMany(mappedBy = "pk.team", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//	@Fetch(FetchMode.SELECT) 
-//	public Set<EmployeeTeam> getEmployeeTeams() {
-//		return employeeTeams;
-//	}
-//
-//	public void setEmployeeTeams(Set<EmployeeTeam> employeeTeams) {
-//		this.employeeTeams = employeeTeams;
-//	}
 }

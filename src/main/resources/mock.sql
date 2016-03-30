@@ -529,10 +529,10 @@ INSERT INTO `team` (`team_id`,`name`,`description`) VALUES ("4307DDA3-39A2-B50E-
 INSERT INTO `team` (`team_id`,`name`,`description`) VALUES ("1241B787-4484-4DA7-6C73-C8A2D5C63B31","sollicitudin","Sed nulla ante, iaculis nec, eleifend non, dapibus rutrum, justo. Praesent luctus. Curabitur egestas nunc sed libero. Proin sed turpis nec mauris blandit");
 
 -- Team Members
-INSERT INTO `employee_team` (`fk_employee_employee_team`,`fk_team_employee_team`,`primary_team`) VALUES ("02EC1401-51E4-196A-6A9D-7209B40D31C1","EDC9FC77-7BE4-7837-F537-67B0AEA85C9F.", 1);
-INSERT INTO `employee_team` (`fk_employee_employee_team`,`fk_team_employee_team`,`primary_team`) VALUES ("02EC1401-51E4-196A-6A9D-7209B40D31C1","71A9BB32-D816-B46C-41DD-CAE62A8E3D15.", 0);
-INSERT INTO `employee_team` (`fk_employee_employee_team`,`fk_team_employee_team`,`primary_team`) VALUES ("04B60870-E2DA-92A1-5A5B-BA8E85B1478D","EDC9FC77-7BE4-7837-F537-67B0AEA85C9F.", 1);
-INSERT INTO `employee_team` (`fk_employee_employee_team`,`fk_team_employee_team`,`primary_team`) VALUES ("0514ED29-EEC3-6704-1F9E-8623582CEE12","EDC9FC77-7BE4-7837-F537-67B0AEA85C9F.", 1);
-INSERT INTO `employee_team` (`fk_employee_employee_team`,`fk_team_employee_team`,`primary_team`) VALUES ("07089FA2-2C53-723E-CE0F-5A09D92C7D06","EDC9FC77-7BE4-7837-F537-67B0AEA85C9F.", 1);
-INSERT INTO `employee_team` (`fk_employee_employee_team`,`fk_team_employee_team`,`primary_team`) VALUES ("099F82FD-D820-F94C-405C-9C3310251514","EDC9FC77-7BE4-7837-F537-67B0AEA85C9F.", 1);
-INSERT INTO `employee_team` (`fk_employee_employee_team`,`fk_team_employee_team`,`primary_team`) VALUES ("0FA8615F-0FCD-E258-7C87-97FAB0C62F90","EDC9FC77-7BE4-7837-F537-67B0AEA85C9F.", 1);
+INSERT INTO `employee_team` (`fk_employee_employee_team`,`fk_team_employee_team`,`primary_team`) VALUES ("02EC1401-51E4-196A-6A9D-7209B40D31C1","EDC9FC77-7BE4-7837-F537-67B0AEA85C9F", 1);
+INSERT INTO `employee_team` (`fk_employee_employee_team`,`fk_team_employee_team`,`primary_team`) VALUES ("02EC1401-51E4-196A-6A9D-7209B40D31C1","71A9BB32-D816-B46C-41DD-CAE62A8E3D15", 0);
+INSERT INTO `employee_team` (`fk_employee_employee_team`,`fk_team_employee_team`,`primary_team`) VALUES ("04B60870-E2DA-92A1-5A5B-BA8E85B1478D","EDC9FC77-7BE4-7837-F537-67B0AEA85C9F", 1);
+INSERT INTO `employee_team` (`fk_employee_employee_team`,`fk_team_employee_team`,`primary_team`) VALUES ("0514ED29-EEC3-6704-1F9E-8623582CEE12","EDC9FC77-7BE4-7837-F537-67B0AEA85C9F", 1);
+INSERT INTO `employee_team` (`fk_employee_employee_team`,`fk_team_employee_team`,`primary_team`) VALUES ("07089FA2-2C53-723E-CE0F-5A09D92C7D06","EDC9FC77-7BE4-7837-F537-67B0AEA85C9F", 1);
+INSERT INTO `employee_team` (`fk_employee_employee_team`,`fk_team_employee_team`,`primary_team`) VALUES ("099F82FD-D820-F94C-405C-9C3310251514","EDC9FC77-7BE4-7837-F537-67B0AEA85C9F", 1);
+INSERT INTO `employee_team` (`fk_employee_employee_team`,`fk_team_employee_team`,`primary_team`) VALUES ("0FA8615F-0FCD-E258-7C87-97FAB0C62F90","EDC9FC77-7BE4-7837-F537-67B0AEA85C9F", 1);

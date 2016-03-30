@@ -54,6 +54,40 @@ public class EmployeeRestController {
     }
     
     /**
+     * Updates the employee.
+     *
+     * @param employee the employee
+     * @return the employee
+     */
+    @RequestMapping(value = "/employee", method = RequestMethod.PUT)
+    public Employee updateEmployee(@RequestBody Employee employee) {
+
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.update(employee);
+        transaction.commit();
+
+        return employee;    
+    }
+    
+    /**
+     * Updates the team.
+     *
+     * @param team the team
+     * @return the team
+     */
+    @RequestMapping(value = "/team", method = RequestMethod.PUT)
+    public Team updateTeam(@RequestBody Team team) {
+    	
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.update(team);
+        transaction.commit();
+
+        return team;    
+    }
+    
+    /**
      * Adds the team.
      *
      * @param team the team
@@ -120,7 +154,6 @@ public class EmployeeRestController {
         query.setString("team", uuid);
         query.executeUpdate();
         transaction.commit();
-        
         transaction = session.beginTransaction();
         Team employee = (Team) session.get(Team.class, uuid);
         session.delete(employee);
@@ -136,7 +169,6 @@ public class EmployeeRestController {
     public List getEmployees() {
     	
         Session session = sessionFactory.openSession();
-
         return session.createCriteria(Employee.class).list();
     }
     
@@ -168,7 +200,6 @@ public class EmployeeRestController {
     public List getTeams() {
     	
         Session session = sessionFactory.openSession();
-
         return session.createCriteria(Team.class).list();
     }
     
