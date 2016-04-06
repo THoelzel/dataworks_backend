@@ -166,7 +166,7 @@ public class EmployeeRestController {
      * @return the employees
      */
     @RequestMapping(value = "/employee", method = RequestMethod.GET)
-    public List<String> getEmployees() {
+    public List getEmployees() {
     	
         Session session = sessionFactory.openSession();
         return session.createCriteria(Employee.class).list();
@@ -197,7 +197,7 @@ public class EmployeeRestController {
      * @return the teams
      */
     @RequestMapping("/team")
-    public List<String> getTeams() {
+    public List getTeams() {
     	
         Session session = sessionFactory.openSession();
         return session.createCriteria(Team.class).list();
@@ -210,7 +210,7 @@ public class EmployeeRestController {
      * @return the employee by team
      */
     @RequestMapping("/employee/team/{uuid}")
-    public List<String> getEmployeeByTeam(@PathVariable String uuid) {
+    public List getEmployeeByTeam(@PathVariable String uuid) {
     	
         Session session = sessionFactory.openSession();
         
@@ -230,7 +230,7 @@ public class EmployeeRestController {
      * @return the list
      */
     @RequestMapping("/employee/search/all/{searchTerm}")
-    public List<String> searchForEmployee(@PathVariable String searchTerm) {
+    public List searchForEmployee(@PathVariable String searchTerm) {
 
         Session session = sessionFactory.openSession();
 
@@ -266,7 +266,7 @@ public class EmployeeRestController {
      * @return the list
      */
     @RequestMapping("/employee/search/{searchCriteria}/{searchTerm}")
-    public List<String> searchForEmployee(@PathVariable String searchCriteria, @PathVariable String searchTerm) {
+    public List searchForEmployee(@PathVariable String searchCriteria, @PathVariable String searchTerm) {
 
     	if(!(searchCriteria.equalsIgnoreCase("firstName") || 
     			searchCriteria.equalsIgnoreCase("middleName") ||

@@ -1,8 +1,6 @@
 package dataworks;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -15,6 +13,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @EnableWebSecurity
 @Configuration
@@ -29,12 +29,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
+		.addFilterBefore(new CORSFilter(), ChannelProcessingFilter.class)
 		.csrf().disable()
+		//.headers().disable()    
 		.authorizeRequests()
 		.antMatchers("/authenticated").permitAll()
 		.anyRequest().authenticated()
 		.and()
 		.httpBasic().and()
+		.formLogin().and()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 

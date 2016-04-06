@@ -5,7 +5,7 @@
 
 	<groupId>dataworks</groupId>
 	<artifactId>dataworks_backend</artifactId>
-	<version>0.0.4</version>
+	<version>0.0.5</version>
 	<packaging>war</packaging>
 
 	<name>DataWorks</name>
@@ -52,6 +52,10 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
 			<version>4.0.4.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
