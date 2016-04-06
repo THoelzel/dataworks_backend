@@ -5,7 +5,7 @@
 
 	<groupId>dataworks</groupId>
 	<artifactId>dataworks_backend</artifactId>
-	<version>0.0.5</version>
+	<version>0.1.0</version>
 	<packaging>war</packaging>
 
 	<name>DataWorks</name>
@@ -49,20 +49,6 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-web</artifactId>
-			<version>4.0.4.RELEASE</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-config</artifactId>
-			<version>4.0.4.RELEASE</version>
-		</dependency>
-		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.26</version>
@@ -82,5 +68,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
